@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import Form from './component/Form/Form'
-import ContactList from './component/ContactList/ContactList'
-import { nanoid } from 'nanoid'
+import Form from './component/Form/Form';
+import ContactList from './component/ContactList/ContactList';
+import Filter from './component/Filter/Filter'
+import { nanoid } from 'nanoid';
 
 class App extends Component {
   state = {
@@ -11,7 +12,7 @@ class App extends Component {
     {id: 'id-3', name: 'Eden Clements', number: '645-17-79'},
     {id: 'id-4', name: 'Annie Copeland', number: '227-91-26'},
   ],
- 
+ filter: ''
 }
   formSubmitHandler =({name,number}) => {
    
@@ -34,8 +35,6 @@ class App extends Component {
       }));
     }
   
-    
-   
   }
   deleteContact = contactId => {
     this.setState(prevState => ({
@@ -43,8 +42,20 @@ class App extends Component {
     }))
   }
 
+  changeFilter = e => {
+    this.setState({filter: e.currentTarget.value})
+  }
+  getVisibleContacts = () => {
+     const { contacts, filter } = this.state;
+    const normalizeFilter = filter.toLowerCase();
+    return contacts.filter(contact => contact.name.toLowerCase().includes(normalizeFilter));
+   }
+  
+
   render() {
-    const { contacts } = this.state;
+    const { contacts, filter } = this.state;
+    
+    const visibleContacts = this.getVisibleContacts()
    
      return (
       
@@ -53,9 +64,8 @@ class App extends Component {
   <Form onSubmit={this.formSubmitHandler}/>
 
   <h2>Contacts</h2>
-  {/* <Filter />
-  <ContactList /> */}
-         <ContactList contacts={contacts} onDeleteContact={this.deleteContact}/>
+         <Filter value={filter} onChange={this.changeFilter}/> 
+         <ContactList contacts={visibleContacts} onDeleteContact={this.deleteContact}/>
 </div>
   )
   }
