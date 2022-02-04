@@ -1,26 +1,34 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
-class App extends Component {
-  state = {
-  contacts: [],
-  name: '',
-  number: ''
-}
- 
-  // hendelNameChange = event => {
-  //   this.setState({name: event.currentTarget.value})
-  //  }
-  hendelChange = e => {
-    console.log(e.currentTarget)
-    console.log(e.currentTarget.value)
-     console.log(e.currentTarget.name)
-  }
+class Form extends Component {
+   state = {
+    name: '',
+      number: ''
+   }
 
-  render() {
-     return (
-       <form>
+     handelChange = e => {
+        const { name, value } = e.currentTarget;
+     this.setState({
+       [name]: value
+    })
+   };
+   handelSubmit = e => {
+      e.preventDefault();
+
+    
+      const {name, number} = this.state
+      this.props.onSubmit({name, number})
+
+
+      this.setState({name: '',  number: ''})
+   };
+
+   render() {
+      
+      return (
+         <form onSubmit={this.handelSubmit}>
          <label>
-           І'мя
+            Name
             <input
           type="text"
           name="name"
@@ -28,11 +36,11 @@ class App extends Component {
           title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
            required
            value={this.state.name}
-           onChange={this.hendelChange}
+           onChange={this.handelChange}
         />
          </label>
          <label>
-           Тел
+           Phone
            <input
              type="tel"
              name="number"
@@ -40,15 +48,13 @@ class App extends Component {
              title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
              required
              value={this.state.number}
-             onChange={this.hendelChange}
+             onChange={this.handelChange}
            />
          </label>
+         <button type='submit'>Add contact</button>
       </form>
-  )
-  }
- 
+      )
+   }
 }
 
-export default App;
-
-
+export default Form;
