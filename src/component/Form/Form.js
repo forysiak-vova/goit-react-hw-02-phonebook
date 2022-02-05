@@ -7,7 +7,7 @@ class Form extends Component {
     onSubmit: PropTypes.func.isRequired,
   };
    state = {
-    name: '',
+      name: '',
       number: ''
    }
 

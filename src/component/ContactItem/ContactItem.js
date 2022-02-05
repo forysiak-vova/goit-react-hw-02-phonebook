@@ -5,7 +5,7 @@ function ContactItem({id, name, number,onDeleteContact}) {
    return (
       <Item>
                <ContactName> {name}</ContactName>
-               <span>( {number} )</span>
+               <p>( {number} )</p>
               <Button onClick={()=>onDeleteContact(id)}>delete</Button>
       </Item>
 )
