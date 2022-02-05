@@ -1,6 +1,11 @@
 import React, { Component } from "react";
+import PropTypes from 'prop-types';
+import {Label,Input,Button} from './Form.styles'
 
 class Form extends Component {
+   static propTypes = {
+    onSubmit: PropTypes.func.isRequired,
+  };
    state = {
     name: '',
       number: ''
@@ -27,9 +32,10 @@ class Form extends Component {
       
       return (
          <form onSubmit={this.handelSubmit}>
-         <label>
-            Name
-            <input
+            <Label>
+               <h4> Name</h4>
+           
+            <Input
           type="text"
           name="name"
           pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
@@ -38,10 +44,11 @@ class Form extends Component {
            value={this.state.name}
            onChange={this.handelChange}
         />
-         </label>
-         <label>
-           Phone
-           <input
+         </Label>
+            <Label>
+               <h4>Phone</h4>
+             
+           <Input
              type="tel"
              name="number"
              pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
@@ -50,11 +57,12 @@ class Form extends Component {
              value={this.state.number}
              onChange={this.handelChange}
            />
-         </label>
-         <button type='submit'>Add contact</button>
+         </Label>
+         <Button type='submit'>Add contact</Button>
       </form>
       )
    }
 }
+
 
 export default Form;
